@@ -16,6 +16,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   TextEditingController zipcodeController = TextEditingController();
+  String _temperature = '';
   final _storage = FlutterSecureStorage();
   @override
   void initState() {
@@ -26,16 +27,10 @@ class _DashboardState extends State<Dashboard> {
   Future<Null> _readZipcode() async {
     var zipcode = await _storage.read(key: 'zipcode');
     if (zipcode != null) {
-      setState(() => _zipcode = zipcode);
       zipcodeController.value = TextEditingValue(text: zipcode);
       fetchWeather(zipcode);
     }
   }
-
-  String _zipcode;
-  String _temperature = '';
-
-  void logOut() {}
 
   Future<String> fetchWeather(String zipcode) async {
     var queryParameters = {
@@ -95,6 +90,7 @@ class _DashboardState extends State<Dashboard> {
             Container(
                 width: 200.0,
                 child: TextField(
+                    onChanged: (_) => setState(() => _temperature = ''),
                     textAlign: TextAlign.center,
                     controller: zipcodeController,
                     decoration: InputDecoration(
