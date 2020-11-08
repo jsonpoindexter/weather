@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather/common/constants.dart';
 import 'package:weather/screens/login.dart';
@@ -15,7 +16,23 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   TextEditingController zipcodeController = TextEditingController();
+  final _storage = FlutterSecureStorage();
+  @override
+  void initState() {
+    super.initState();
+    _readZipcode();
+  }
 
+  Future<Null> _readZipcode() async {
+    var zipcode = await _storage.read(key: 'zipcode');
+    if (zipcode != null) {
+      setState(() => _zipcode = zipcode);
+      zipcodeController.value = TextEditingValue(text: zipcode);
+      fetchWeather(zipcode);
+    }
+  }
+
+  String _zipcode;
   String _temperature = '';
 
   void logOut() {}
@@ -30,6 +47,7 @@ class _DashboardState extends State<Dashboard> {
         Constants.openWeatherUri, '/data/2.5/weather', queryParameters);
     var response = await http.get(uri);
     if (response.statusCode == 200) {
+      _storage.write(key: "zipcode", value: zipcode);
       var jsonResponse = convert.jsonDecode(response.body);
       var temperature;
       try {

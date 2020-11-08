@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
+        print(accessToken.userId);
         // TODO save token to secure storage?
         Navigator.pushReplacementNamed(context, Dashboard.routeName);
         break;
@@ -26,8 +27,8 @@ class _LoginState extends State<Login> {
         _showMessage('Login cancelled by the user.');
         break;
       case FacebookLoginStatus.error:
-        _showMessage('Something went wrong with the login process.\n'
-            'Here\'s the error Facebook gave us: ${result.errorMessage}');
+        _showMessage(
+            'Something went wrong with the login process.\n${result.errorMessage}');
         break;
     }
   }
