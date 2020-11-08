@@ -16,7 +16,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   TextEditingController zipcodeController = TextEditingController();
 
-  String _tempurature = '';
+  String _temperature = '';
 
   void logOut() {}
 
@@ -31,13 +31,19 @@ class _DashboardState extends State<Dashboard> {
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       var jsonResponse = convert.jsonDecode(response.body);
+      var temperature;
+      try {
+        temperature = jsonResponse['main']['temp'].round().toString();
+      } catch (error) {
+        return "Unable to fetch temperature information.";
+      }
       setState(() {
-        _tempurature = jsonResponse['main']['temp'].round().toString();
+        _temperature = temperature;
       });
       return null;
     } else {
       setState(() {
-        _tempurature = '';
+        _temperature = '';
       });
       return 'Request failed with status: ${response.statusCode}.';
     }
@@ -60,8 +66,8 @@ class _DashboardState extends State<Dashboard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            if (_tempurature.isNotEmpty)
-              Text('Current Tempurature: ' + _tempurature + 'F'),
+            if (_temperature.isNotEmpty)
+              Text('Current Temperature: ' + _temperature + 'F'),
             TextField(
                 controller: zipcodeController,
                 decoration: InputDecoration(
