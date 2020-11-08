@@ -32,10 +32,6 @@ class _LoginState extends State<Login> {
     }
   }
 
-  static Future<Null> fblogOut() async {
-    await facebookSignIn.logOut();
-  }
-
   void _showMessage(String message) {
     setState(() {
       _message = message;

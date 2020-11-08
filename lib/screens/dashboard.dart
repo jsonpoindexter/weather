@@ -74,11 +74,14 @@ class _DashboardState extends State<Dashboard> {
           children: <Widget>[
             if (_temperature.isNotEmpty)
               Text('Current Temperature: ' + _temperature + 'F'),
-            TextField(
-                controller: zipcodeController,
-                decoration: InputDecoration(
-                  hintText: 'Enter a zipcode',
-                )),
+            Container(
+                width: 200.0,
+                child: TextField(
+                    textAlign: TextAlign.center,
+                    controller: zipcodeController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter a zipcode',
+                    ))),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
