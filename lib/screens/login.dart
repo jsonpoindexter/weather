@@ -12,7 +12,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   static final FacebookLogin facebookSignIn = new FacebookLogin();
 
-  String _message = 'Log in/out by pressing the buttons below.';
+  String _message = '';
 
   Future<Null> _login() async {
     final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
@@ -32,9 +32,8 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Future<Null> _logOut() async {
+  static Future<Null> fblogOut() async {
     await facebookSignIn.logOut();
-    _showMessage('Logged out.');
   }
 
   void _showMessage(String message) {
@@ -54,10 +53,6 @@ class _LoginState extends State<Login> {
             new RaisedButton(
               onPressed: _login,
               child: new Text('Log in'),
-            ),
-            new RaisedButton(
-              onPressed: _logOut,
-              child: new Text('Logout'),
             ),
           ],
         ),
