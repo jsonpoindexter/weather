@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard> {
 
   void logOut() {}
 
-  Future<void> fetchWeather(String zipcode) async {
+  Future<String> fetchWeather(String zipcode) async {
     var queryParameters = {
       'zip': zipcode,
       'units': 'imperial',
@@ -34,8 +34,12 @@ class _DashboardState extends State<Dashboard> {
       setState(() {
         _tempurature = jsonResponse['main']['temp'].round().toString();
       });
+      return null;
     } else {
-      print('Request failed with status: ${response.statusCode}.');
+      setState(() {
+        _tempurature = '';
+      });
+      return 'Request failed with status: ${response.statusCode}.';
     }
   }
 
@@ -66,7 +70,25 @@ class _DashboardState extends State<Dashboard> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
-                onPressed: () => fetchWeather(zipcodeController.text),
+                onPressed: () async {
+                  var error = await fetchWeather(zipcodeController.text);
+                  if (error != null) {
+                    showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        elevation: 10,
+                        title: Text("Error"),
+                        content: Text(error),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text("OK"),
+                            onPressed: () => Navigator.of(context).pop(),
+                          )
+                        ],
+                      ),
+                    );
+                  }
+                },
                 child: Text('Submit'),
               ),
             ),
