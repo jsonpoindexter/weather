@@ -41,7 +41,13 @@ class _DashboardState extends State<Dashboard> {
         _temperature = temperature;
       });
       return null;
+    } else if (response.statusCode == 404) {
+      setState(() {
+        _temperature = '';
+      });
+      return 'Invalid zipcode. Please try again.';
     } else {
+      // Handle general errors
       setState(() {
         _temperature = '';
       });
