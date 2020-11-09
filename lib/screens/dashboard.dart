@@ -68,6 +68,11 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  void logOut() {
+    _storage.delete(key: 'zipcode');
+    Navigator.pushReplacementNamed(context, Login.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +80,7 @@ class _DashboardState extends State<Dashboard> {
         title: Text(Constants.appName),
         actions: <Widget>[
           new RaisedButton(
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, Login.routeName),
+            onPressed: () => logOut(),
             child: new Text('Logout'),
           ),
         ],
