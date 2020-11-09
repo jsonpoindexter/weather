@@ -18,11 +18,9 @@ class _LoginState extends State<Login> {
     final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        final FacebookAccessToken accessToken = result.accessToken;
         Navigator.pushReplacementNamed(context, Dashboard.routeName);
         break;
       case FacebookLoginStatus.cancelledByUser:
-        _showMessage('Login cancelled by the user.');
         break;
       case FacebookLoginStatus.error:
         _showMessage(

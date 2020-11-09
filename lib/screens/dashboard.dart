@@ -79,7 +79,7 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         title: Text(Constants.appName),
         actions: <Widget>[
-          new RaisedButton(
+          new FlatButton(
             onPressed: () => logOut(),
             child: new Text('Logout'),
           ),
