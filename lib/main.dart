@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:weather/common/theme.dart';
 import 'package:weather/screens/dashboard.dart';
 import 'package:weather/screens/login.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'common/constants.dart';
 
-void main() {
+Future<void> main() async {
+  await DotEnv().load('.env');
   runApp(MyApp());
 }
 

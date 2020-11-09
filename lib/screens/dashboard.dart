@@ -39,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
       'appid': Constants.openWeatherApiId,
     };
     var uri = Uri.https(
-        Constants.openWeatherUri, '/data/2.5/weather', queryParameters);
+        Constants.openWeatherHost, '/data/2.5/weather', queryParameters);
     var response = await http.get(uri);
     if (response.statusCode == 200) {
       _storage.write(key: "zipcode", value: zipcode);

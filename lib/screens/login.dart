@@ -19,8 +19,6 @@ class _LoginState extends State<Login> {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
-        print(accessToken.userId);
-        // TODO save token to secure storage?
         Navigator.pushReplacementNamed(context, Dashboard.routeName);
         break;
       case FacebookLoginStatus.cancelledByUser:
