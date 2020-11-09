@@ -1,6 +1,6 @@
 # weather
 
-Weather application using Facebook oauth
+Fetch current tempurature using Facebook oauth and OpenWeather API
 
 ## Getting Started
 
